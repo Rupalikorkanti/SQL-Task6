@@ -1,17 +1,17 @@
 # SQL-Task6: Subqueries and Nested Queries
 
-## 🎯 Objective
+## Objective
 Practice advanced SQL concepts including:
 - Scalar subqueries
 - Correlated subqueries
 - Subqueries in WHERE and FROM clauses
 - Nested logic using IN, EXISTS, and derived tables
 
-## 🛠 Tools Used
+## Tools Used
 - MySQL Workbench
 - Sample schema with Customers and Orders tables
 
-## 🧪 Sample Data
+## Sample Data
 ### Customers Table
 | CustomerID | CustomerName | City        |
 |------------|---------------|-------------|
@@ -28,14 +28,14 @@ Practice advanced SQL concepts including:
 | 103     | 2024-05-04 | 2          | 150.00 |
 | 104     | 2024-05-06 | NULL       | 100.00 |
 
-## ✅ Queries Included
+## Queries 
 1. Scalar subquery to get average order amount
 2. Correlated subquery to find high-paying customers
 3. Subqueries with IN and EXISTS for filtering
 4. Derived table (subquery in FROM) to get total order amount
 5. Subquery to find customer with highest single order
 
-## 🚀 Output
+## Output
 These queries demonstrate how nested subqueries and advanced filtering improve data retrieval and logic expression in SQL.
 
 
