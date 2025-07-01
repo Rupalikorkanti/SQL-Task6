@@ -1,0 +1,67 @@
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    CustomerName VARCHAR(100),
+    City VARCHAR(50)
+);
+
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    OrderDate DATE,
+    CustomerID INT,
+    Amount DECIMAL(10, 2),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+
+INSERT INTO Customers VALUES
+(1, 'Alice', 'New York'),
+(2, 'Bob', 'Los Angeles'),
+(3, 'Charlie', 'Chicago'),
+(4, 'Diana', 'Houston');
+
+INSERT INTO Orders VALUES
+(101, '2024-05-01', 1, 250.00),
+(102, '2024-05-03', 1, 300.00),
+(103, '2024-05-04', 2, 150.00),
+(104, '2024-05-06', NULL, 100.00);
+
+SELECT 
+    CustomerName,
+    (SELECT AVG(Amount) FROM Orders WHERE Amount IS NOT NULL) AS AvgOrderAmount
+FROM Customers;
+
+SELECT CustomerName
+FROM Customers c
+WHERE EXISTS (
+    SELECT 1
+    FROM Orders o
+    WHERE o.CustomerID = c.CustomerID
+    AND o.Amount > (SELECT AVG(Amount) FROM Orders WHERE Amount IS NOT NULL)
+);
+
+SELECT CustomerName
+FROM Customers
+WHERE CustomerID IN (SELECT CustomerID FROM Orders WHERE CustomerID IS NOT NULL);
+
+SELECT CustomerName
+FROM Customers c
+WHERE EXISTS (
+    SELECT 1 FROM Orders o
+    WHERE o.CustomerID = c.CustomerID
+);
+
+SELECT CustomerName, TotalAmount
+FROM (
+    SELECT CustomerID, SUM(Amount) AS TotalAmount
+    FROM Orders
+    GROUP BY CustomerID
+) AS OrderSummary
+JOIN Customers ON Customers.CustomerID = OrderSummary.CustomerID;
+
+SELECT CustomerName
+FROM Customers
+WHERE CustomerID = (
+    SELECT CustomerID
+    FROM Orders
+    WHERE Amount = (SELECT MAX(Amount) FROM Orders)
+);
+
